@@ -1,0 +1,40 @@
+header * {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+header p {
+  font-size: 0.9rem;
+}
+
+#about {
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+#latest-update,
+#about-anchor,
+#sort-div {
+  font-size: 0.8rem;
+}
+
+#sort-div * {
+  font-size: inherit;
+}
+
+#container {
+  font-size: 0.8rem;
+}
+
+#about strong {
+  font-weight: bolder;
+  background-color: bisque;
+}
+
+#about i {
+  margin-right: 2px;
+}

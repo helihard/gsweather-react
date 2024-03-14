@@ -1,0 +1,86 @@
+:root {
+  --bgcolour: whitesmoke;
+  --mainfont: "Open Sans", sans-serif;
+  --linkcolour: royalblue;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--mainfont);
+  background-color: var(--bgcolour);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header,
+#about,
+#latest-update,
+#about-anchor,
+#sort-div,
+main {
+  width: 60vw;
+}
+
+header {
+  text-align: center;
+}
+
+#sort-div {
+  margin: 3px 0 13px;
+}
+
+#sort-div i:first-of-type {
+  margin-right: 10px;
+}
+
+#sort-div i:last-of-type {
+  margin-left: 3px;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  flex-direction: column-reverse;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.reverse {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-div {
+  display: flex;
+  gap: 15px;
+  padding-left: 1rem;
+}
+
+button {
+  border: 0;
+  outline: none;
+  margin: 0;
+  padding: 0 3px 0 0;
+  background-color: transparent;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: left;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: var(--linkcolour);
+}
