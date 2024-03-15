@@ -1,7 +1,65 @@
+import { useState, useEffect } from "react"
+import { formatTimestamp, getColour } from "../jsmodules/process-data-utils.js"
+/*import {
+  getMaxTempPerDay,
+  getMaxTempPerDayWithHour,
+} from "../jsmodules/max-temp-utils.js"*/
+
 function Main() {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    async function fetchOpenData() {
+      try {
+        const openDataLink =
+          "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/89230/period/latest-months/data.json"
+        const response = await fetch(openDataLink)
+        const result = await response.json()
+        const allValues = result.value
+
+        const thisYearsValues = allValues.filter((hourValue) => {
+          if (hourValue.date >= 1704063600000) {
+            return true
+          } else {
+            return false
+          }
+        })
+
+        const formattedValues = thisYearsValues.map((hourValue) => {
+          return {
+            timestamp: hourValue.date,
+            datetime: formatTimestamp(hourValue.date, "Europe/Stockholm"),
+            temp: parseFloat(hourValue.value),
+          }
+        })
+
+        setData(formattedValues)
+      } catch (error) {
+        console.error("API-data kunde inte hämtas")
+      }
+    }
+
+    fetchOpenData()
+  }, [])
+
+  if (!data) {
+    return null
+  }
+
   return (
     <>
-      <main>Main area placeholder</main>
+      <main>
+        {data.map((value) => (
+          <div
+            key={value.timestamp}
+            className="data-div"
+            style={{ backgroundColor: getColour(value.temp) }}
+          >
+            <p>{value.datetime}</p>
+            <p className="temp-paragraph">{value.temp}</p>
+          </div>
+        ))}
+      </main>
     </>
   )
 }
