@@ -5,7 +5,7 @@ import { formatTimestamp, getColour } from "../jsmodules/process-data-utils.js"
   getMaxTempPerDayWithHour,
 } from "../jsmodules/max-temp-utils.js"*/
 
-function Main() {
+function TemperatureList() {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -62,4 +62,4 @@ function Main() {
   )
 }
 
-export default Main
+export default TemperatureList

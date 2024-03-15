@@ -3,7 +3,7 @@ import "./css/text-styles.css"
 import Headline from "./components/Headline"
 import Introduction from "./components/Introduction"
 import Buttons from "./components/Buttons"
-import Main from "./components/Main"
+import TemperatureList from "./components/TemperatureList"
 import Description from "./components/Description"
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
       <main>
         <Introduction />
         <Buttons />
-        <Main />
+        <TemperatureList />
       </main>
       <footer>
         <Description />
