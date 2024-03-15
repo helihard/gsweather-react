@@ -1,6 +1,6 @@
 import "./css/styles.css"
 import "./css/text-styles.css"
-import Header from "./components/Header"
+import Headline from "./components/Headline"
 import Introduction from "./components/Introduction"
 import Buttons from "./components/Buttons"
 import Main from "./components/Main"
@@ -9,11 +9,17 @@ import Description from "./components/Description"
 function App() {
   return (
     <>
-      <Header />
-      <Introduction />
-      <Buttons />
-      <Main />
-      <Description />
+      <header>
+        <Headline />
+      </header>
+      <main>
+        <Introduction />
+        <Buttons />
+        <Main />
+      </main>
+      <footer>
+        <Description />
+      </footer>
     </>
   )
 }

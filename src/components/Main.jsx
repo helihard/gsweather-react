@@ -29,7 +29,7 @@ function Main() {
           return {
             timestamp: hourValue.date,
             datetime: formatTimestamp(hourValue.date, "Europe/Stockholm"),
-            temp: parseFloat(hourValue.value),
+            temp: parseFloat(hourValue.value).toFixed(1),
           }
         })
 
@@ -47,20 +47,18 @@ function Main() {
   }
 
   return (
-    <>
-      <main>
-        {data.map((value) => (
-          <div
-            key={value.timestamp}
-            className="data-div"
-            style={{ backgroundColor: getColour(value.temp) }}
-          >
-            <p>{value.datetime}</p>
-            <p className="temp-paragraph">{value.temp}</p>
-          </div>
-        ))}
-      </main>
-    </>
+    <div id="data-div">
+      {data.map((value) => (
+        <div
+          key={value.timestamp}
+          className="value-div"
+          style={{ backgroundColor: getColour(value.temp) }}
+        >
+          <p>{value.datetime}</p>
+          <p className="temp-paragraph">{value.temp}</p>
+        </div>
+      ))}
+    </div>
   )
 }
 

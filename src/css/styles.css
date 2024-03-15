@@ -23,7 +23,7 @@ header,
 #latest-update,
 #about-anchor,
 #sort-div,
-main {
+#data-div {
   width: 60vw;
 }
 
@@ -48,7 +48,7 @@ header {
   flex-direction: column;
 }
 
-main {
+#data-div {
   display: flex;
   flex-direction: column-reverse;
   border-radius: 1rem;
@@ -61,7 +61,7 @@ main {
   flex-direction: column;
 }
 
-.data-div {
+.value-div {
   display: flex;
   gap: 15px;
   padding-left: 1rem;
