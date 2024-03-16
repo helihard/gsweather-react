@@ -1,65 +1,20 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { getColour } from "../jsmodules/process-data-utils.js"
 import getMaxTempPerDay from "../jsmodules/max-temp-utils.js"
 
-function TemperatureList() {
-  const [data, setData] = useState([])
+function TemperatureList({ data }) {
   const [sortOrder, setSortOrder] = useState("desc")
   const [showHours, setShowHours] = useState(false)
 
-  useEffect(() => {
-    async function fetchOpenData() {
-      try {
-        const openDataLink =
-          "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/89230/period/latest-months/data.json"
-        const response = await fetch(openDataLink)
-        const result = await response.json()
-        const allValues = result.value
-
-        const thisYearsValues = allValues.filter((hourValue) => {
-          if (hourValue.date >= 1704063600000) {
-            return true
-          } else {
-            return false
-          }
-        })
-
-        const formattedValues = thisYearsValues.map((hourValue) => {
-          return {
-            timestamp: hourValue.date,
-            temp: parseFloat(hourValue.value).toFixed(1),
-          }
-        })
-
-        setData(formattedValues)
-      } catch (error) {
-        console.error("API-data kunde inte hämtas")
-      }
-    }
-
-    fetchOpenData()
-  }, [])
-
-  if (!data) {
+  if (!data.length) {
     return null
   }
-
-  const test = getMaxTempPerDay(data, showHours)
+  const dataWithMaxTemp = getMaxTempPerDay(data, showHours)
 
   return (
     <>
-      <p id="latest-update">Latest update placeholder</p>
-      <p id="about-anchor">
-        Baserad på data från&nbsp;
-        <a href="https://www.smhi.se/" target="_blank">
-          SMHI
-        </a>
-        . <br />
-        <a href="#about">Mer information om använd data</a>
-        <br />
-      </p>
       <p id="sort-div">
-        Sorterar på{" "}
+        Sorterar på&nbsp;
         <button
           id="sort-btn"
           onClick={() => {
@@ -80,7 +35,7 @@ function TemperatureList() {
         {showHours && <i className="fa-regular fa-clock" id="clock-icon"></i>}
       </p>
       <div className={sortOrder === "asc" ? "data-div-asc" : "data-div-desc"}>
-        {test.map((value) => (
+        {dataWithMaxTemp.map((value) => (
           <div
             key={value.timestamp}
             className="value-div"
