@@ -1,48 +1,33 @@
+import { formatTimestamp } from "./process-data-utils.js";
 
-export function getMaxTempPerDay(data) {
+export default function getMaxTempPerDay(data, showHours) {
   const dailyData = [];
 
   data.forEach(entry => {
-    const date = entry.datetime.split(' ')[0];
+    const datetime = formatTimestamp(entry.timestamp, "Europe/Stockholm"); // extract date, time, timezone from timestamp
+    const date = datetime.split(' ')[0]; // extract date
+    const time = datetime.split(' ')[1]; // extract hour
 
     // Check if an entry already exists for the current date
-    const existingEntry = dailyData.find(item => item.date === date);
-
-    if (!existingEntry) {
-      // If no entry exists, create a new one for the current date
-      dailyData.push({ date, maxTemperature: entry.temp });
-    } else {
-      // If an entry exists, update the maxTemperature if needed
-      existingEntry.maxTemperature = Math.max(existingEntry.maxTemperature, entry.temp);
-    }
-  });
-
-  return dailyData;
-}
-
-
-export function getMaxTempPerDayWithHour(data) {
-  const dailyData = [];
-
-  data.forEach(entry => {
-    const date = entry.datetime.split(' ')[0];
-    const time = entry.datetime.split(' ')[1]; // Extract the time part
-
-    // Check if an entry already exists for the current date
-    const existingEntryIndex = dailyData.findIndex(item => item.date === date);
+    const existingEntryIndex = dailyData.findIndex(item => item.observationDate === date);
 
     if (existingEntryIndex === -1) {
+      const observation = { timestamp: entry.timestamp, observationDate: date, maxTemperature: entry.temp }
+      if (showHours) {
+        observation["observationTime"] = time;
+      }
       // If no entry exists, create a new one for the current date
-      dailyData.push({ date, maxTemperature: entry.temp, observationTime: time });
+      dailyData.push(observation);
     } else {
       // If an entry exists, update the maxTemperature and observationTime if needed
       if (entry.temp > dailyData[existingEntryIndex].maxTemperature) {
         dailyData[existingEntryIndex].maxTemperature = entry.temp;
-        dailyData[existingEntryIndex].observationTime = time; // Update the observation time
+        if (showHours) {
+          dailyData[existingEntryIndex].observationTime = time; // Update the observation time
+        }
       }
     }
   });
 
   return dailyData;
 }
-

@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react"
-import { formatTimestamp, getColour } from "../jsmodules/process-data-utils.js"
-/*import {
-  getMaxTempPerDay,
-  getMaxTempPerDayWithHour,
-} from "../jsmodules/max-temp-utils.js"*/
+import { getColour } from "../jsmodules/process-data-utils.js"
+import getMaxTempPerDay from "../jsmodules/max-temp-utils.js"
 
 function TemperatureList() {
   const [data, setData] = useState([])
+  const [showHours, setShowHours] = useState(false)
 
   useEffect(() => {
     async function fetchOpenData() {
@@ -28,7 +26,6 @@ function TemperatureList() {
         const formattedValues = thisYearsValues.map((hourValue) => {
           return {
             timestamp: hourValue.date,
-            datetime: formatTimestamp(hourValue.date, "Europe/Stockholm"),
             temp: parseFloat(hourValue.value).toFixed(1),
           }
         })
@@ -46,19 +43,43 @@ function TemperatureList() {
     return null
   }
 
+  const test = getMaxTempPerDay(data, showHours)
+
   return (
-    <div id="data-div">
-      {data.map((value) => (
-        <div
-          key={value.timestamp}
-          className="value-div"
-          style={{ backgroundColor: getColour(value.temp) }}
-        >
-          <p>{value.datetime}</p>
-          <p className="temp-paragraph">{value.temp}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <p id="latest-update">Latest update placeholder</p>
+      <p id="about-anchor">
+        Baserad på data från&nbsp;
+        <a href="https://www.smhi.se/" target="_blank">
+          SMHI
+        </a>
+        . <br />
+        <a href="#about">Mer information om använd data</a>
+        <br />
+      </p>
+      <p id="sort-div">
+        Sorterar på <button id="sort-btn">sort button placeholder</button>
+        <i className="fa-solid fa-arrows-up-down"></i> Visar&nbsp;
+        <button id="datetime-btn" onClick={() => setShowHours(!showHours)}>
+          {showHours ? "datum och tid" : "endast datum"}
+        </button>
+        <i className="fa-regular fa-calendar-days"></i>
+        {showHours && <i className="fa-regular fa-clock" id="clock-icon"></i>}
+      </p>
+      <div id="data-div">
+        {test.map((value) => (
+          <div
+            key={value.timestamp}
+            className="value-div"
+            style={{ backgroundColor: getColour(value.maxTemperature) }}
+          >
+            <p>{value.observationDate}</p>
+            {showHours && <p>{value.observationTime}</p>}
+            <p className="temp-paragraph">{value.maxTemperature}</p>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
 
