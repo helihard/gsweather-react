@@ -48,7 +48,7 @@ header {
   flex-direction: column;
 }
 
-#data-div {
+.data-div-desc {
   display: flex;
   flex-direction: column-reverse;
   border-radius: 1rem;
@@ -56,9 +56,12 @@ header {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-.reverse {
+.data-div-asc {
   display: flex;
   flex-direction: column;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .value-div {

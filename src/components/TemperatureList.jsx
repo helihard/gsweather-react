@@ -4,6 +4,7 @@ import getMaxTempPerDay from "../jsmodules/max-temp-utils.js"
 
 function TemperatureList() {
   const [data, setData] = useState([])
+  const [sortOrder, setSortOrder] = useState("desc")
   const [showHours, setShowHours] = useState(false)
 
   useEffect(() => {
@@ -58,7 +59,19 @@ function TemperatureList() {
         <br />
       </p>
       <p id="sort-div">
-        Sorterar på <button id="sort-btn">sort button placeholder</button>
+        Sorterar på{" "}
+        <button
+          id="sort-btn"
+          onClick={() => {
+            if (sortOrder === "desc") {
+              setSortOrder("asc")
+            } else {
+              setSortOrder("desc")
+            }
+          }}
+        >
+          {sortOrder === "desc" ? "nyast först" : "äldst först"}
+        </button>
         <i className="fa-solid fa-arrows-up-down"></i> Visar&nbsp;
         <button id="datetime-btn" onClick={() => setShowHours(!showHours)}>
           {showHours ? "datum och tid" : "endast datum"}
@@ -66,7 +79,7 @@ function TemperatureList() {
         <i className="fa-regular fa-calendar-days"></i>
         {showHours && <i className="fa-regular fa-clock" id="clock-icon"></i>}
       </p>
-      <div id="data-div">
+      <div className={sortOrder === "asc" ? "data-div-asc" : "data-div-desc"}>
         {test.map((value) => (
           <div
             key={value.timestamp}
