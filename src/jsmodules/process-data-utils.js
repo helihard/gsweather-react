@@ -29,5 +29,15 @@ export function getColour(temp) {
     return "darkkhaki";
   } else if (temp >= 12 && temp <= 14.9) {
     return "darkseagreen";
+  } else if (temp >= 15 && temp <= 17.9) {
+    return "darkolivegreen";
+  } else if (temp >= 18 && temp <= 20.9) {
+    return "forestgreen";
+  } else if (temp >= 21 && temp <= 23.9) {
+    return "darkgreen";
+  } else if (temp >= 24 && temp <= 26.9) {
+    return "gold";
+  } else if (temp >= 27 && temp <= 29.9) {
+    return "goldenrod";
   }
 }
